@@ -28,7 +28,7 @@
           <tr v-for="product in productStore.products" :key="product.id">
             <td>{{ product.name }}</td>
             <td>{{ product.category || '-' }}</td>
-            <td>${{ product.price.toFixed(2) }}</td>
+            <td>${{ product.price }}</td>
             <td class="actions">
               <RouterLink :to="`/products/${product.id}`" class="link-view">View</RouterLink>
             </td>
@@ -37,7 +37,7 @@
       </table>
 
       <!-- Pagination -->
-      <div v-if="productStore.totalPages > 1" class="pagination">
+      <div v-if="productStore.totalPage > 1" class="pagination">
         <button
           :disabled="productStore.currentPage === 1"
           @click="goToPage(productStore.currentPage - 1)"
@@ -59,7 +59,7 @@
         </div>
 
         <button
-          :disabled="productStore.currentPage === productStore.totalPages"
+          :disabled="productStore.currentPage === productStore.totalPage"
           @click="goToPage(productStore.currentPage + 1)"
           class="page-btn"
         >
@@ -68,7 +68,7 @@
       </div>
 
       <div class="pagination-info">
-        Page {{ productStore.currentPage }} of {{ productStore.totalPages }}
+        Page {{ productStore.currentPage }} of {{ productStore.totalPage }}
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@ const error = ref<string | null>(null)
 const visiblePages = computed(() => {
   const pages = []
   const start = Math.max(1, productStore.currentPage - 2)
-  const end = Math.min(productStore.totalPages, productStore.currentPage + 2)
+  const end = Math.min(productStore.totalPage, productStore.currentPage + 2)
 
   for (let i = start; i <= end; i++) {
     pages.push(i)
@@ -95,7 +95,7 @@ const visiblePages = computed(() => {
 })
 
 const goToPage = async (page: number) => {
-  await productStore.fetchProducts(page, productStore.pageSize)
+  await productStore.fetchProducts(page, productStore.pageLength)
 }
 
 

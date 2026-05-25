@@ -7,9 +7,13 @@ export interface Product {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[]
+  items: T[]
   page: number
-  pageSize: number
-  total: number
-  totalPages: number
+  pageLength: number
+  totalPage: number
+  totalCount: number
+}
+
+export interface GetProductByIdResponse {
+  product: Product
 }

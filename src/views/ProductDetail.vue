@@ -17,7 +17,7 @@
 
             <div class="info-item">
               <label>Price</label>
-              <p class="price">${{ productStore.currentProduct.price.toFixed(2) }}</p>
+              <p class="price">${{ productStore.currentProduct.price }}</p>
             </div>
 
 
@@ -39,10 +39,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute, RouterLink } from 'vue-router'
+import {useRoute, RouterLink } from 'vue-router'
 import { useProductStore } from '../stores/product'
 
-const router = useRouter()
 const route = useRoute()
 const productStore = useProductStore()
 
@@ -67,12 +66,8 @@ onMounted(async () => {
   loading.value = true
   error.value = null
   try {
-    const productId = parseInt(route.params.id as string)
-    if (!isNaN(productId)) {
-      await productStore.fetchProductById(productId)
-    } else {
-      error.value = 'Invalid product ID'
-    }
+    const productId = route.params.id as string
+    await productStore.fetchProductById(productId)
   } catch (err: any) {
     error.value = err.message || 'Failed to load product'
   } finally {
