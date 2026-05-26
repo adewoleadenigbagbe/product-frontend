@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Silent Login Callback</title>
+  <script>
+    // Handle the silent callback from IdentityServer
+    // This page is used by the OIDC client for silent token refresh
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(
+        { message: 'iframe_loaded' },
+        window.location.origin
+      )
+    }
+  </script>
+</head>
+<body></body>
+</html>
